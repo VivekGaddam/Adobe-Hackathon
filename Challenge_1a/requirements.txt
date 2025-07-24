@@ -1,0 +1,4 @@
+unstructured[pdf]==0.12.4
+# Below packages are automatically installed but can be pinned for reproducibility
+pypdf==4.2.0
+pdfminer.six==20221105
