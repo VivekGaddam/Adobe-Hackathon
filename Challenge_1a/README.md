@@ -5,6 +5,7 @@ This is a **sample solution** for Challenge 1a of the Adobe India Hackathon 2025
 
 ## Official Challenge Guidelines
 
+
 ### Submission Requirements
 - **GitHub Project**: Complete code repository with working solution
 - **Dockerfile**: Must be present in the root directory and functional
