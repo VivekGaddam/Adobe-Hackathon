@@ -107,12 +107,9 @@ def process_single_pdf(pdf_path):
     try:
         doc = fitz.open(pdf_path)
 
-        # <<< START: NEW FREQUENCY COUNTING LOGIC >>>
-        # Pass 1: Determine body size and find all recurring text (headers/footers)
         font_size_counts = Counter()
         line_text_counts = Counter()
         
-        # Get body size based on character count per font size
         for page in doc:
             for block in page.get_text("dict")['blocks']:
                 for line in block.get('lines', []):
@@ -123,7 +120,6 @@ def process_single_pdf(pdf_path):
         
         body_size = font_size_counts.most_common(1)[0][0] if font_size_counts else 12
 
-        # Count text frequency to identify headers/footers
         for page in doc:
             for block in page.get_text("dict")['blocks']:
                 for line in block.get('lines', []):
@@ -131,18 +127,14 @@ def process_single_pdf(pdf_path):
                     if line_text:
                         line_text_counts.update([line_text])
 
-        # Any text that appears on more than 2 pages is likely a header or footer
         recurring_texts = {text for text, count in line_text_counts.items() if count > 2}
-        # <<< END: NEW FREQUENCY COUNTING LOGIC >>>
 
-        # Pass 2: Process the document for real headings
         output_data = {
             "title": extract_title(doc[0]) or 'untitled',
             "outline": []
         }
 
-        # This outer with-block for pdfplumber seems unused in your core logic,
-        # but is kept to maintain your original structure.
+
         with pdfplumber.open(pdf_path) as pdf:
             for page_num, page in enumerate(doc):
                 text = page.get_text("text").strip()
@@ -166,7 +158,6 @@ def process_single_pdf(pdf_path):
     except Exception as e:
         return f"Error processing {pdf_path.name}: {e}"
 
-# --- This section is unchanged ---
 def process_pdfs():
     input_dir = Path("./sample_dataset/pdfs")
     output_dir = Path("./sample_dataset/output")

@@ -1,0 +1,9 @@
+PyMuPDF
+pdfplumber
+spacy
+torch
+sentence-transformers
+chromadb
+pytesseract
+Pillow
+jsonschema
